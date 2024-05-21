@@ -692,3 +692,7 @@ div#txt {
   right: 20px;
   top: 1.5%;
 }
+.tempweather {
+  height: 15vh;
+  width: 5vw;
+}
