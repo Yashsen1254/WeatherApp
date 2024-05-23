@@ -1,11 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Card() {
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
-  const [city, setCity] = useState("Delhi");
-  const [weatherData, setWeatherDate] = useState();
+  const [data, setData] = useState({});
+  const [location, setLocation] = useState('');
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=dbb39f8627b47c13bb05d2adef1d9da4`;
 
   useEffect(() => {
     const updateClock = () => {
@@ -20,23 +22,15 @@ function Card() {
     return () => clearInterval(time);
   });
 
-  useEffect(() => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=dbb39f8627b47c13bb05d2adef1d9da4`;
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error");
-        }
-        return response.json();
+  const searchLocation = (event) => {
+    if(event.key === 'Enter') {
+      axios.get(url).then((response) => {
+        setData(response.data)
+        console.log(response.data)
       })
-      .then((data) => {
-        console.log(data);
-        setWeatherDate(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [city]);
+      setLocation(' ')
+    }
+  }
 
   return (
     <>
@@ -44,8 +38,8 @@ function Card() {
         <div className="container">
           <div className="city">
             <div className="title">
-              <h2>{city.name}</h2>
-              {city.sys ? <h3>{city.sys.country}</h3> : null}
+              <h2>jamnagar</h2>
+              <h3>In</h3>
             </div>
             <div className="mb-icon">
               <p>In</p>
@@ -58,7 +52,7 @@ function Card() {
               </div>
               <div className="temperature">
                 <p>
-                  {city.main ? <span>{city.main.temp}</span> : null}
+                  temp
                   <span>°C</span>
                 </p>
               </div>
@@ -78,8 +72,9 @@ function Card() {
                 <input
                   type="text"
                   className="search-bar"
-                  // onChange={handelCityChange}
-                  value={city}
+                  onChange={event => setLocation(event.target.value)}
+                  onKeyPress={searchLocation}
+                  value={location}
                   placeholder="Search any city"
                 />
                 <div className="img-box">
