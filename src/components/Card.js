@@ -6,7 +6,7 @@ function Card() {
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
   const [data, setData] = useState({});
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=dbb39f8627b47c13bb05d2adef1d9da4`;
 
   useEffect(() => {
@@ -23,14 +23,14 @@ function Card() {
   });
 
   const searchLocation = (event) => {
-    if(event.key === 'Enter') {
+    if (event.key === "Enter") {
       axios.get(url).then((response) => {
-        setData(response.data)
-        console.log(response.data)
-      })
-      setLocation(' ')
+        setData(response.data);
+        console.log(response.data);
+      });
+      setLocation(" ");
     }
-  }
+  };
 
   return (
     <>
@@ -39,7 +39,7 @@ function Card() {
           <div className="city">
             <div className="title">
               <h2>{data.name}</h2>
-              <h3>In</h3>
+              {data.sys ? <h3>{data.sys.country}</h3> : null}
             </div>
             <div className="mb-icon">
               <p>In</p>
@@ -52,7 +52,7 @@ function Card() {
               </div>
               <div className="temperature">
                 <p>
-                  temp
+                  {data.main ? data.main.temp : null}
                   <span>°C</span>
                 </p>
               </div>
@@ -62,17 +62,20 @@ function Card() {
             <div className="forecast-icon"></div>
             <div className="today-weather">
               <h3>
-                <img
+                {/* <img
                   className="tempweather"
-                  // src={`https://openweathermap.org/img/wn/${api[0].weather[0].icon}.png`}
+                  // src={`https://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
                   alt="Icon Image"
-                />
+                /> */}
+                {data.weather && data.weather[0]
+                  ? data.weather[0].description
+                  : null}
               </h3>
               <div className="search-box">
                 <input
                   type="text"
                   className="search-bar"
-                  onChange={event => setLocation(event.target.value)}
+                  onChange={(event) => setLocation(event.target.value)}
                   onKeyPress={searchLocation}
                   value={location}
                   placeholder="Search any city"
@@ -84,20 +87,34 @@ function Card() {
               <ul>
                 <div>
                   <li className="cityHead">
-                    <p>{data.name} , </p>
+                    <p>
+                      {data.name}, {data.sys ? data.sys.country : null}
+                    </p>
                     <img className="temp" />
                   </li>
                   <li>
-                    Temperature <span className="temp">°C</span>
+                    Temp
+                    {data.main ? (
+                      <span className="temp">{data.main.temp}°C</span>
+                    ) : null}
                   </li>
                   <li>
-                    Humidity <span className="temp">%</span>
+                    Humidity
+                    {data.main ? (
+                      <span className="temp">{data.main.humidity}%</span>
+                    ) : null}
                   </li>
                   <li>
-                    Visibility <span className="temp"> mi</span>
+                    Visibility{" "}
+                    {data.visibility ? (
+                      <span className="temp">{data.visibility / 1000} mi</span>
+                    ) : null}
                   </li>
                   <li>
-                    Wind Speed <span className="temp">Km/h</span>
+                    Wind Speed{" "}
+                    {data.wind ? (
+                      <span className="temp">{data.wind.speed}Km/h</span>
+                    ) : null}
                   </li>
                 </div>
               </ul>
