@@ -52,7 +52,7 @@ function Card() {
               </div>
               <div className="temperature">
                 <p>
-                  {data.main ? data.main.temp : null}
+                  {data.main ? data.main.temp.toFixed() : null}
                   <span>°C</span>
                 </p>
               </div>
