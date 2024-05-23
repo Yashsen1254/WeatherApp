@@ -38,7 +38,7 @@ function Card() {
         <div className="container">
           <div className="city">
             <div className="title">
-              <h2>jamnagar</h2>
+              <h2>{data.name}</h2>
               <h3>In</h3>
             </div>
             <div className="mb-icon">
@@ -84,7 +84,7 @@ function Card() {
               <ul>
                 <div>
                   <li className="cityHead">
-                    <p>,</p>
+                    <p>{data.name} , </p>
                     <img className="temp" />
                   </li>
                   <li>
