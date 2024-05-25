@@ -1,3 +1,7 @@
+# Output
+
+![Capture](https://github.com/Yashsen1254/WeatherApp/assets/155702507/bdd34f68-4d05-42db-90e3-1dd8035d35e3)
+
 # Weather Application
 
 This Weather Application is a web-based tool that provides users with current weather information and forecasts. It is built using ReactJS and integrates with a weather API to fetch real-time data.
